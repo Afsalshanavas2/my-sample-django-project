@@ -48,17 +48,17 @@ WSGI_APPLICATION = "new.wsgi.application"
 # -----------------------------
 pymysql.install_as_MySQLdb()
 
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": os.getenv("DATABASE_NAME"),
-        "USER": os.getenv("DATABASE_USER"),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
-        "HOST": os.getenv("DATABASE_HOST", "localhost"),
+        "NAME": os.getenv("DATABASE_NAME", "sample_students"),
+        "USER": os.getenv("DATABASE_USER", "root"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD", ""),  # no password
+        "HOST": os.getenv("DATABASE_HOST", "127.0.0.1"),
         "PORT": os.getenv("DATABASE_PORT", "3306"),
     }
 }
-
 # -----------------------------
 # STATIC / MEDIA
 # -----------------------------
