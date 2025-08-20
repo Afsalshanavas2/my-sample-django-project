@@ -40,30 +40,43 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "new.urls"      # Replace with your project folder name
+ROOT_URLCONF = "new.urls"  # Replace 'new' with your project folder name
 WSGI_APPLICATION = "new.wsgi.application"
 
 # -----------------------------
 # DATABASE
 # -----------------------------
-pymysql.install_as_MySQLdb()
-
+pymysql.install_as_MySQLdb()  # Needed if using PyMySQL
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": os.getenv("DATABASE_NAME", "sample_students"),
         "USER": os.getenv("DATABASE_USER", "root"),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD", ""),  # no password
+        "PASSWORD": os.getenv("DATABASE_PASSWORD", ""),  # empty password
         "HOST": os.getenv("DATABASE_HOST", "127.0.0.1"),
         "PORT": os.getenv("DATABASE_PORT", "3306"),
     }
 }
+
 # -----------------------------
 # STATIC / MEDIA
 # -----------------------------
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Required for Render collectstatic
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+# -----------------------------
+# TIME / LANGUAGE
+# -----------------------------
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
+USE_I18N = True
+USE_TZ = True
+
+# -----------------------------
+# DEFAULT AUTO FIELD
+# -----------------------------
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
