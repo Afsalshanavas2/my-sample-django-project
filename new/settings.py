@@ -1,25 +1,25 @@
 import os
 from pathlib import Path
+import pymysql
 from dotenv import load_dotenv
 
-# Load .env file
+# -----------------------------
+# BASE
+# -----------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 # -----------------------------
-# SECURITY SETTINGS
+# SECURITY
 # -----------------------------
-SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-secret-key")  # Default for local dev
+SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-secret-key")
 DEBUG = os.getenv("DEBUG", "False") == "True"
-
-# Allowed hosts (comma-separated in .env or Render environment variables)
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
 
 # -----------------------------
-# APPLICATION DEFINITION
+# APPLICATIONS
 # -----------------------------
 INSTALLED_APPS = [
-    # default Django apps...
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -40,29 +40,14 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "new.urls"  # replace 'new' with your project folder
-
-TEMPLATES = [
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ],
-        },
-    },
-]
-
-WSGI_APPLICATION = "new.wsgi.application"  # replace 'new' with your project folder
+ROOT_URLCONF = "new.urls"      # Replace with your project folder name
+WSGI_APPLICATION = "new.wsgi.application"
 
 # -----------------------------
-# DATABASE (example using MySQL)
+# DATABASE
 # -----------------------------
+pymysql.install_as_MySQLdb()
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
@@ -75,13 +60,10 @@ DATABASES = {
 }
 
 # -----------------------------
-# STATIC FILES
+# STATIC / MEDIA
 # -----------------------------
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"  # collected static files for production
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# -----------------------------
-# MEDIA FILES (if needed)
-# -----------------------------
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
